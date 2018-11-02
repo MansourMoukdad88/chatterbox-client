@@ -32,15 +32,12 @@ var app = {
 			}
 		})
 	},
-  handleUsernameClick : function() {
-    console.log("issa")
+  handleUsernameClick : function(event) {
     $('#main').css("background-color", "red")
-
   },
   fetch : function () {
-    var that = this;
     $.ajax({
-      url: this.server,
+      url: app.server,
       type: 'GET',
       data: {order: "-createdAt"}, //last 100 messages
 
@@ -79,7 +76,7 @@ var app = {
       //append the userName
       $("#chats"+i).append(`<div class = 'username'> username: <a href='#'> ${user} </a><div><br>`)
       //append the text
-      $("#chats"+i).append("message: " + app.messages.results[i].text)
+      $("#chats"+i).append("message: " + app.escapeHTML(app.messages.results[i].text))
       $("#chats"+i).append("<br>")
       //append the roomName
       $("#chats"+i).append("roomname: " + app.messages.results[i].roomname)
@@ -104,15 +101,16 @@ var app = {
         }
       }
     })
+  },
+  escapeHTML: function(string) {
+    if (!string) {return;}
+    return string.replace(/[&<>"'=\/]/g, '');
   }
 };
 
 $(document).ready(function () {
   //this function is not working
-  $('.username a').click(function(){
-    window.app.handleUsernameClick()
-  })
-
+  
   //this function for the rooms filtering
   $('#roomBTN').on('click', function(event) {
     event.preventDefault()
@@ -124,10 +122,10 @@ $(document).ready(function () {
       if (app.messages.results[i].roomname === $('#list').val()) {
         var user = app.messages.results[i].username
         $("#container").append(`<div class ="chats" id="chats${i}"></div>`)
-        $("#chats"+i).append(`<div class = 'username'> username: <a class="user${i}" href='#'> ${user} </a><div><br>`)
-        $("#chats"+i).append("message: " + app.messages.results[i].text)
+        $("#chats"+i).append(`<div> username: <a class = 'username'> ${app.escapeHTML(user)} </a><div><br>`)
+        $("#chats"+i).append("message: " + app.escapeHTML(app.messages.results[i].text))
         $("#chats"+i).append("<br>")
-        $("#chats"+i).append("roomname: " + app.messages.results[i].roomname)
+        $("#chats"+i).append("roomname: " + app.escapeHTML(app.messages.results[i].roomname))
       }
     }
     $('#list').val("")
@@ -151,4 +149,9 @@ $(document).ready(function () {
 
 app.init()
 
+$('.username').on('click', function(){
+    console.log("isa")
+    window.app.handleUsernameClick()
+  })
 
+//class="user${i}

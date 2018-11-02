@@ -21,13 +21,15 @@
     </script>
     <!-- your scripts -->
     <script src="env/config.js"></script>
-    <script src="scripts/app.js"></script>
+    <script src="scripts/appNew.js"></script>
   </head>
   <body>
     <div id="main">
 
       <center><h1>chatterbox</h1></center>
       <!-- Your HTML goes here! -->
+
+      <!-- This from is for the rooms list and bottun -->
       <form action="" method="">
         <center><input id="list" list="browsers" name="browser"></center>
         <datalist id="browsers">
@@ -35,13 +37,15 @@
         <center><button id="roomBTN"> Submit RoomName </button></center>
       </form>
 
-      <form action="#">
-      <center><input id="inputtxt" type="text" name="text"></center>
-      <center><button id="btn"> Submit Message </button></center>
+      <!-- This form is for the messages -->
+      <form action="">
+      <center><input id="txt" type="text" name="text"></center>
+      <center><button id="txtBTN"> Submit Message </button></center>
       </form>
 
     </div>
-    <center><div id="chats"></div></center>
+
+    <center><div class="chats"></div></center>
     
     
     <script type="text/javascript">
